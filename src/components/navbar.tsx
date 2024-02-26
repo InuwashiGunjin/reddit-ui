@@ -3,6 +3,7 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { MoreHorizontal, QrCode, Search } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { ModeToggle } from './toggle-dark-mode'
 
 type Props = {}
 export default function Navbar({}: Props) {
@@ -34,9 +35,11 @@ export default function Navbar({}: Props) {
 
       {/* buttons */}
       <div className='flex items-center gap-2'>
+        <ModeToggle />
+
         <Button
           variant='secondary'
-          className='flex gap-2 bg-[#eaedef] hover:bg-[#eaedef]/60 hidden md:flex transition-all'>
+          className='flex gap-2  hidden md:flex transition-all'>
           <QrCode
             size={20}
             className=''

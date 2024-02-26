@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/navbar'
 import { cn } from '@/lib/utils'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,15 +19,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={cn('min-h-screen w-full max-h-screen px-3', inter.className)}>
-        <Navbar />
-        <div>
-          {/* left sidebar */}
-          {/* main */}
-        </div>
+      <ThemeProvider
+        attribute='class'
+        defaultTheme='system'
+        enableSystem
+        disableTransitionOnChange>
+        <body className={cn('min-h-screen w-full max-h-screen px-3', inter.className)}>
+          <Navbar />
+          <div>
+            {/* left sidebar */}
+            {/* main */}
+          </div>
 
-        {children}
-      </body>
+          {children}
+        </body>
+      </ThemeProvider>
     </html>
   )
 }
