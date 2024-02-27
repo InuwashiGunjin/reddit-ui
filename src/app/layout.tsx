@@ -4,6 +4,8 @@ import './globals.css'
 import Navbar from '@/components/navbar'
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/theme-provider'
+import Sidebar from '@/components/sidebar'
+import { sidebarData } from '@/components/sidebar/data'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,14 +26,13 @@ export default function RootLayout({
         defaultTheme='system'
         enableSystem
         disableTransitionOnChange>
-        <body className={cn('min-h-screen w-full max-h-screen px-3', inter.className)}>
+        <body className={cn('min-h-screen h-screen w-full max-h-screen px-3', inter.className)}>
           <Navbar />
-          <div>
-            {/* left sidebar */}
-            {/* main */}
-          </div>
 
-          {children}
+          <section className='w-full max-w-7xl mx-auto h-full flex'>
+            <Sidebar />
+            <main className='p-3 max-h-full w-full overflow-auto'>{children}</main>
+          </section>
         </body>
       </ThemeProvider>
     </html>

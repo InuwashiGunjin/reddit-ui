@@ -6,9 +6,9 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ModeToggle } from './toggle-dark-mode'
 
 type Props = {}
-export default function Navbar({}: Props) {
+const Navbar = ({}: Props) => {
   return (
-    <div className='py-3 border-b flex justify-between gap-2 '>
+    <div className='py-3 border-b flex justify-between gap-2 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       {/* logo */}
       <Link
         href={'/'}
@@ -61,3 +61,4 @@ export default function Navbar({}: Props) {
     </div>
   )
 }
+export default Navbar
