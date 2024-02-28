@@ -11,7 +11,7 @@ export default function Home() {
           opts={{
             align: 'start',
           }}
-          className='w-[calc(100%-100px)] '>
+          className='w-full'>
           <CarouselContent>
             {Array.from({ length: 5 }).map((_, index) => (
               <CarouselItem
@@ -21,9 +21,18 @@ export default function Home() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className='left-3' />
+          <CarouselNext className='right-16' />
         </Carousel>
+      </section>
+
+      {/* h-662px */}
+      {/* w-750px */}
+      <section className='flex flex-col gap-3'>
+        {/* left main */}
+        <main className='w-[750px] border-2'>blabla</main>
+        {/* right sidebar */}
+        <aside></aside>
       </section>
     </div>
   )
