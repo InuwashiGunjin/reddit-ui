@@ -26,12 +26,15 @@ export default function RootLayout({
         defaultTheme='system'
         enableSystem
         disableTransitionOnChange>
-        <body className={cn('min-h-screen h-screen w-full max-h-screen px-3', inter.className)}>
+        <body
+          className={cn('min-h-screen h-screen overflow-clip w-full max-h-screen px-3', inter.className, {
+            'debug-screens': process.env.NODE_ENV === 'development',
+          })}>
           <Navbar />
-
           <section className='w-full max-w-7xl mx-auto h-full flex'>
             <Sidebar />
-            <main className='p-3 max-h-full w-full overflow-auto'>{children}</main>
+
+            <main className='p-3 w-full h-[calc(100%-64px)]  overflow-auto'>{children}</main>
           </section>
         </body>
       </ThemeProvider>

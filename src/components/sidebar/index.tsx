@@ -8,12 +8,32 @@ import { sidebarData } from './data'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useAtom } from 'jotai'
+import { menuAtom } from '@/app/store'
 
 // sidebar data
 const Sidebar = () => {
+  const [animationParent] = useAutoAnimate({ duration: 100, easing: 'ease-in-out' })
+  const [menu, setMenu] = useAtom(menuAtom)
+
   sidebarData
   return (
-    <div className='flex flex-col gap-1 border-r w-[250px] h-full  py-3 p-2'>
+    <div ref={animationParent}>
+      {menu && (
+        <div className='md:hidden fixed top-[64px] left-0 bg-black/50 h-screen w-full z-10 backdrop-blur-sm'>
+          <MainMenu className='bg-white dark:bg-black' />
+        </div>
+      )}
+      <div className='hidden md:flex'>
+        <MainMenu />
+      </div>
+    </div>
+  )
+}
+
+const MainMenu = (props: { className?: string }) => {
+  return (
+    <div className={cn('flex flex-col gap-1 border-r w-[250px] h-full  py-3 p-2', props.className)}>
       <div className='flex flex-col gap-1 w-full'>
         {sidebarData.categoryWithoutList?.map((data, index) => (
           <SidebarItem
@@ -89,7 +109,7 @@ const CategoryWithList = (props: CategoryWithListType) => {
   return (
     <div
       ref={animationParent}
-      className='flex flex-col gap-1 w-full'>
+      className=' flex flex-col gap-1 w-full'>
       <button
         onClick={toggleCategory}
         className={cn('w-full flex transition-all rounded-md py-2 px-4 hover:bg-secondary justify-between')}>
