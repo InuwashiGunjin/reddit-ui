@@ -5,7 +5,6 @@ import Navbar from '@/components/navbar'
 import { cn } from '@/lib/utils'
 import { ThemeProvider } from '@/components/theme-provider'
 import Sidebar from '@/components/sidebar'
-import { sidebarData } from '@/components/sidebar/data'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,10 +30,10 @@ export default function RootLayout({
             'debug-screens': process.env.NODE_ENV === 'development',
           })}>
           <Navbar />
-          <section className='w-full max-w-7xl mx-auto h-full flex'>
-            <Sidebar />
+          <section className='w-full max-w-7xl mx-auto h-[calc(100%-64px)]   flex'>
+            <Sidebar className=' h-[calc(100%-64px)]' />
 
-            <main className='p-3 w-full h-[calc(100%-64px)]  overflow-auto'>{children}</main>
+            <main className='p-3 w-full overflow-auto'>{children}</main>
           </section>
         </body>
       </ThemeProvider>

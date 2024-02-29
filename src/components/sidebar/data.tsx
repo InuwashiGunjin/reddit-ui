@@ -1,58 +1,157 @@
-'use client'
+import { IconType } from 'react-icons'
 
-import { FaCog, FaHome, FaUser } from 'react-icons/fa'
-import { SidebarType } from './type'
-import { AiOutlineHome, AiOutlineSetting, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineUser, AiOutlineSetting } from 'react-icons/ai'
+import { RiSettings3Line } from 'react-icons/ri'
 
-// Sample data
-export const sidebarData: SidebarType = {
+export type SidebarItemType = {
+  icon: IconType
+  activeIcon: IconType
+  title: string
+  href?: string
+  subItems?: {
+    title: string
+    href: string
+  }[]
+}
+
+export type CategoryWithListType = {
+  title: string
+  categories: SidebarItemType[]
+}
+
+export type SidebarType = {
+  categoryWithoutList: SidebarItemType[]
+  categoryWithList: CategoryWithListType[]
+}
+
+// sample data for SidebarType
+export const sampleSidebarData: SidebarType = {
   categoryWithoutList: [
     {
       icon: AiOutlineHome,
-      activeIcon: FaHome, // Using the same icon for active state
+      activeIcon: AiOutlineHome,
       title: 'Home',
       href: '/home',
     },
     {
       icon: AiOutlineUser,
-      activeIcon: FaUser, // Using the same icon for active state
+      activeIcon: AiOutlineUser,
       title: 'Profile',
       href: '/profile',
     },
     {
-      icon: AiOutlineSetting,
-      activeIcon: FaCog, // Using the same icon for active state
+      icon: RiSettings3Line,
+      activeIcon: RiSettings3Line,
       title: 'Settings',
       href: '/settings',
     },
   ],
   categoryWithList: [
     {
-      title: 'Analytics',
+      title: 'Main',
       categories: [
         {
-          title: 'Overview',
-          href: '/analytics/overview',
+          icon: AiOutlineHome,
+          activeIcon: AiOutlineHome,
+          title: 'Home',
+          href: '/home',
+          subItems: [
+            {
+              title: 'Profile',
+              href: '/profile',
+            },
+            {
+              title: 'Settings',
+              href: '/settings',
+            },
+            {
+              title: 'Main',
+              href: '/main',
+            },
+            {
+              title: 'Account',
+              href: '/account',
+            },
+          ],
         },
         {
-          title: 'Reports',
-          href: '/analytics/reports',
+          icon: AiOutlineUser,
+          activeIcon: AiOutlineUser,
+          title: 'Profile',
+          href: '/profile',
         },
       ],
     },
     {
-      title: 'Users',
+      title: 'Settings',
       categories: [
         {
-          title: 'All Users',
-          href: '/users/all',
+          icon: RiSettings3Line,
+          activeIcon: RiSettings3Line,
+          title: 'Settings',
+          href: '/settings',
         },
         {
-          title: 'Active Users',
-          href: '/users/active',
+          icon: RiSettings3Line,
+          activeIcon: RiSettings3Line,
+          title: 'Account Settings',
+          href: '/account-settings',
+          subItems: [
+            {
+              title: 'Profile',
+              href: '/profile',
+            },
+            {
+              title: 'Settings',
+              href: '/settings',
+            },
+            {
+              title: 'Main',
+              href: '/main',
+            },
+            {
+              title: 'Account',
+              href: '/account',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Notification',
+      categories: [
+        {
+          icon: RiSettings3Line,
+          activeIcon: RiSettings3Line,
+          title: 'Notification',
+          href: '/notification',
+        },
+        {
+          icon: RiSettings3Line,
+          activeIcon: RiSettings3Line,
+          title: 'Other',
+          href: '/other',
+          subItems: [
+            {
+              title: 'Profile',
+              href: '/profile',
+            },
+            {
+              title: 'Settings',
+              href: '/settings',
+            },
+            {
+              title: 'Main',
+              href: '/main',
+            },
+            {
+              title: 'Account',
+              href: '/account',
+            },
+          ],
         },
       ],
     },
   ],
 }
-export default sidebarData
+export default sampleSidebarData

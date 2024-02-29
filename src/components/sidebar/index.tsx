@@ -4,47 +4,57 @@ import { ChevronDown } from 'lucide-react'
 import { CategoryWithListType, SidebarItemType, SidebarType } from './type'
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { sidebarData } from './data'
+import { sampleSidebarData } from './data'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useAtom } from 'jotai'
 import { menuAtom } from '@/app/store'
 
-// sidebar data
-const Sidebar = () => {
-  const [animationParent] = useAutoAnimate({ duration: 100, easing: 'ease-in-out' })
-  const [menu, setMenu] = useAtom(menuAtom)
+type Props = {
+  className?: string
+}
 
-  sidebarData
+// sidebar data
+const Sidebar = (props: Props) => {
+  const [animationParent] = useAutoAnimate({ duration: 100, easing: 'ease-in-out' })
+  const [menu] = useAtom(menuAtom)
+
   return (
-    <div ref={animationParent}>
+    <div
+      ref={animationParent}
+      className={cn(props.className)}>
       {menu && (
         <div className='md:hidden fixed top-[64px] left-0 bg-black/50 h-screen w-full z-10 backdrop-blur-sm'>
           <MainMenu className='bg-white dark:bg-black' />
         </div>
       )}
-      <div className='hidden md:flex'>
-        <MainMenu />
-      </div>
+      {/* <div className='hidden md:flex'> */}
+      <MainMenu className='hidden md:flex' />
+      {/* </div> */}
     </div>
   )
 }
 
 const MainMenu = (props: { className?: string }) => {
   return (
-    <div className={cn('flex flex-col gap-1 border-r w-[250px] h-full  py-3 p-2', props.className)}>
+    <div
+      className={cn('flex flex-col gap-1 border-r w-[250px] h-full  py-3 p-2 h-full overflow-auto', props.className)}>
       <div className='flex flex-col gap-1 w-full'>
-        {sidebarData.categoryWithoutList?.map((data, index) => (
-          <SidebarItem
-            key={index}
-            {...{ ...data }}
-          />
+        {sampleSidebarData.categoryWithoutList?.map((data, index) => (
+          <>
+            <SidebarItem
+              key={index}
+              {...{ ...data }}
+            />
+            {sampleSidebarData.categoryWithList.length === index + 1 ? null : <hr />}
+            <hr />
+          </>
         ))}
       </div>
       {/* {sidebarData.categoryWithList && <br />} */}
       <div className='flex flex-col gap-1 w-full'>
-        {sidebarData.categoryWithList?.map((data, index) => (
+        {sampleSidebarData.categoryWithList?.map((data, index) => (
           <CategoryWithList
             key={index}
             {...{ ...data }}
@@ -72,6 +82,7 @@ const SidebarItem = (props: SidebarItemType) => {
       {/* left */}
       {/* icon */}
       <section
+        onClick={toggleSubItem}
         className={cn(
           'w-full items-center flex transition-all rounded-md py-2 px-4 hover:bg-secondary justify-between',
           currentPath && 'bg-secondary'
@@ -81,15 +92,19 @@ const SidebarItem = (props: SidebarItemType) => {
           <p>{props.title}</p>
         </div>
         {props.subItems && (
-          <button onClick={toggleSubItem}>
-            <ChevronDown />
+          <button>
+            <ChevronDown className={cn('text-sm text-gray-500 transition-all', !subItem && 'rotate-180')} />
           </button>
         )}
       </section>
       {props.subItems && subItem && (
-        <section>
+        <section className='flex gap-2 flex-col pl-1 ml-6 mt-2 border-l'>
           {props.subItems.map((data, index) => (
-            <Link href={data.href}>{data.title}</Link>
+            <Link
+              className='w-full items-center flex transition-all rounded-md py-2 px-4 hover:bg-secondary justify-between'
+              href={data.href}>
+              {data.title}
+            </Link>
           ))}
         </section>
       )}
@@ -120,15 +135,19 @@ const CategoryWithList = (props: CategoryWithListType) => {
       {categoryOpen && (
         <div className='pl-4'>
           {props.categories.map((data, index) => (
-            <Link
-              className={cn(
-                'w-full flex rounded-md py-2 px-4 hover:bg-secondary',
-                pathName === data.href && 'bg-secondary'
-              )}
-              href={data.href}
-              key={index}>
-              {data.title}
-            </Link>
+            <SidebarItem
+              key={index}
+              {...{ ...data }}
+            />
+            // <Link
+            //   className={cn(
+            //     'w-full flex rounded-md py-2 px-4 hover:bg-secondary',
+            //     pathName === data.href && 'bg-secondary'
+            //   )}
+            //   href={data.href}
+            //   key={index}>
+            //   {data.title}
+            // </Link>
           ))}
         </div>
       )}
